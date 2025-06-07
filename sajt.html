@@ -1,0 +1,376 @@
+<!DOCTYPE html>
+<html lang="sr">
+<head>
+<meta charset="UTF-8" />
+<title>Kviz sa pitanjima</title>
+<link rel="stylesheet" href="css.css">
+</head>
+<body>
+
+<div id="kviz">
+  <div class="pitanje" id="pitanje"></div>
+  <div id="odgovori"></div>
+  <div class="rezultat" id="rezultat"></div>
+
+  <button id="prethodno">Nazad</button>
+  <button id="proveri">Proveri</button>
+  <button id="sledece">Napred</button>
+</div>
+
+<script>
+const questions = [
+  {
+    text: "Odrediti kojoj grupi lekovitih sredstava pripada droga Ipecacuanhae radix prema mehanizmu delovanja aktivnih sastojaka.",
+    options: ["Ekspektoransima", "Laksansima", "Antitusicima", "Antiemeticima"],
+    correct: [0]
+  },
+  {
+    text: "Izdvojiti zdravstveni problem kod kojeg se ne preporučuje upotreba biljnih droga sa gorkim heterozidima.",
+    options: ["Čir na želucu", "Loše varenje", "Smanjen apetit", "Poremećaj rada jetre"],
+    correct: [0]
+  },
+  {
+    text: "Izdvojiti drogu koja sadrži triterpenske saponozide, a čiji se biljni ekstrakt koristi za izradu preparata za spoljašnju primenu i služi za tretman celulita:",
+    options: ["Senegae radix", "Herniariae herba", "Hippocastani semen", "Hederae helicis folium", "Saponariae radix"],
+    correct: [3]
+  },
+  {
+    text: "Izdvojiti biljnu drogu čiji se heterozidi mogu određivati organoleptički, ispitivanjem gorčine:",
+    options: ["Podophylli rhizoma", "Cynarae flos", "Digitalis lanatae folium", "Gentianae radix", "Uvae ursi folium"],
+    correct: [3]
+  },
+  {
+    text: "Izdvojiti biljnu drogu koja sadrži kardiotonične heterozide:",
+    options: ["Salicis cortex", "Centauri herba", "Strophanti semen", "Cynarae folium"],
+    correct: [2]
+  },
+  {
+    text: "Izdvojiti biljnu drogu koja sadrži hidrolizujuće tanine.",
+    options: ["Tormentillae rhizoma", "Hyperici herba", "Gallae halepensis", "Senegae radix", "Filicis maris rhizoma"],
+    correct: [2]
+  },
+  {
+    text: "Izdvojiti aromatičnu drogu u čijem etarskom ulju se nalazi citral, od kojeg potiče miris droge:",
+    options: ["Caryophylli flos", "Absinthii herba", "Melissae folium", "Iridis rhizoma", "Lavandulae flos"],
+    correct: [2]
+  },
+  {
+    text: "Izdvojiti aromatičnu drogu koja ima antiseptično delovanje a koristi se za ispiranje usta i grla u obliku infuza:",
+    options: ["Caryophylli flos", "Salviae folium", "Zingiberis rhizoma", "Absinthii herba", "Lavandulae flos"],
+    correct: [1]
+  },
+  {
+    text: "Izdvojiti aromatične droge koje se koriste zbog svog antiseptičnog delovanja:",
+    options: ["Valerianae radix", "Cinnamomi cortex", "Thymi folium", "Absinthi herba", "Cinae flos", "Salviae folium"],
+    correct: [2, 5],
+    multiple: true
+  },
+  {
+    text: "Izdvojiti droge koje pripadaju familiji Asteraceae:",
+    options: ["Carvi fructus", "Absinthii herba", "Melissae folium", "Pyrethri flos", "Lavandulae flos", "Millefolii herba"],
+    correct: [1, 3, 5],
+    multiple: true
+  },
+  {
+    text: "Izdvojiti droge koje pripadaju familiji Apiaceae:",
+    options: ["Carvi fructus", "Petroselini radix", "Melissae folium", "Coriandri fructus", "Lavandulae flos", "Salviae folium"],
+    correct: [0, 1, 3],
+    multiple: true
+  },
+  {
+    text: "Izdvojiti aromatične droge u čijem etarskom ulju se nalazi otrovna supstanca-tujon:",
+    options: ["Caryophylli flos", "Absinthii herba", "Salviae folium", "Citri pericarpium", "Iridis rhizoma"],
+    correct: [1, 2],
+    multiple: true
+  },
+  {
+    text: "Izdvojiti droge sa etarskim uljima koje imaju repelentno i insekticidno delovanje:",
+    options: ["Rosmarini folium", "Lavandulae flos", "Zingiberis rhizoma", "Pyrethri flos", "Cinnamomi cortex"],
+    correct: [1, 3],
+    multiple: true
+
+  },
+  {
+    text: "Izdvojiti droge sa diuretičnim delovanjem:",
+    options: ["Cinae flos", "Rosmarini folium", "Juniperi fructus", "Petroselini radix", "Absinthii herba", "Vanillae fructus"],
+    correct: [2, 3],
+    multiple: true
+
+  },
+  {
+    text: "Izdvojiti biljne droge koje deluju diuretično:",
+    options: ["Calendulae flos", "Herniariae herba", "Hederae helicis folium", "Glycyrrhizae radix", "Equiseti herba"],
+    correct: [1, 4],
+    multiple: true
+  },
+  {
+    text: "Izdvojiti biljne droge koje deluju ekspektorantno:",
+    options: ["Primulaee radix", "Alhaeae radix", "Malvae flos", "Senegae radix", "Hippocastani semen"],
+    correct: [0, 3],
+    multiple: true
+  },
+  
+
+  { 
+    text: "Biosinteza kateholamina odvija se u:",
+    options: [
+      "Kori nadbubrežne žlezde",
+      "Koži",
+      "Srži nadbubrežne žlezde",
+      "Štitnoj žlezdi"
+    ],
+    correct: [2],  // indeks počinje od 0, pa je 3-ja opcija indeks 2
+    multiple: false
+  },
+  {
+    text: "Nabrojani su nazivi bojenih dokaznih reakcija. Izdvojiti one koje daju derivati barbiturne kiseline:",
+    options: [
+      "Cvikerova",
+      "Tolensova",
+      "Parijeva",
+      "Marejeva",
+      "Van-urkova"
+    ],
+    correct: [0, 2], // 1. i 3. opcija (indeksi 0 i 2)
+    multiple: true
+  },
+  {
+    text: "106. Od nabrojanih hormona izdvojiti one koji imaju strukturu aminokiselina:",
+    options: [
+      "Tiroksin",
+      "Insulin",
+      "Progesteron",
+      "Adrenalin"
+    ],
+    correct: [0, 3], // 1. i 4. opcija (indeksi 0 i 3)
+    multiple: true
+  },
+   {
+    text: "110. Nabrojane su različite lekovite supstance. Analizom hemijske strukture molekula datih supstanci izdvojiti one koje u sklopu molekula sadrže sulfonamidsku grupu:",
+    options: ["Antazolin", "Tolbutamid", "Meklozin", "Pirazinamid", "Furosemid"],
+    correct: [1, 4],
+    multiple: true
+  },
+  {
+    text: "111. Nabrojane su različite supstance. Poznavajući strukturu nabrojanih supstanci izdvojiti one, koje će sa odgovarajućim reagensom kao proizvod dokazne reakcije dati azo-boju:",
+    options: ["Sulfafurazol", "Dezipramin", "Amfetamin", "Sulfadiazin", "Pentetrazol"],
+    correct: [0, 3],
+    multiple: true
+  },
+  {
+    text: "115. Od nabrojanih jedinjenja po svojoj strukturi u mineralokortikoide spadaju:",
+    options: ["Aldosteron", "Kortizolon", "Dezoksikortikosteron", "Kortizon"],
+    correct: [0, 2],
+    multiple: true
+  },
+  {
+    text: "116. Izdvojte reakcije identifikacije kojima se mogu dokazati i vitamin C i laktoza:",
+    options: ["Parijeva", "Mureksidna", "Felingova", "Cvikrova", "Tolensova"],
+    correct: [2, 4],
+    multiple: true
+  },
+  {
+    text: "117. Poznavajući hemijsku strukturu i delovanje navedenih lekova izdvoj one koji se mogu koristiti u terapiji arterijske hipertenzije:",
+    options: ["Lidokain", "Metil-dopa", "Barbiton", "Difenhidramin hlorid", "Propranolol", "Hlorpromazin hlorid", "Furosemid"],
+    correct: [1, 4, 6],
+    multiple: true
+  },
+  {
+    text: "120. Od navedenih tvrdnji izdvojiti one koje su ispravne, a odnose se na hormone:",
+    options: ["deluju na procese u ćelijama", "progesteron je gestageni ženski polni hormon", "estradiol je gestageni ženski polni hormon", "muški polni hormoni sekundarno imaju anabolički efekat", "deluju na procese van ćelija", "aldosteron je ženski polni hormon", "aldosteron je muški polni hormon"],
+    correct: [0, 1, 3],
+    multiple: true
+  },
+  {
+    text: "161. Evakolacija je:",
+    options: ["perkolacija pod povišenim pritiskom", "perkolacija pod sniženim pritiskom", "ultrazvučna ekstrakcija"],
+    correct: [1],
+    multiple: false
+  },
+  {
+    text: "168. Injekcija ne sme da sadrži konzervans ako je pakovana kao:",
+    options: ["višedozno pakovanje zapremine 15 ml", "jednodozno pakovanje zapremine 15 ml", "jednodozno pakovanje zapremine 5 ml", "jednodozno pakovanje zapremine 2 ml"],
+    correct: [1],
+    multiple: false
+  },
+  {
+    text: "178. Po definiciji podloge tipa apsorpcionih baza su:",
+    options: ["podloge rastvorljive u vodi", "emulzione podloge tipa U/V", "bezvodne podloge tipa ugljovodonika", "podloge koje imaju sposobnost da emulguju vodu"],
+    correct: [3],
+    multiple: false
+  },
+  {
+    text: "192. Podloga koja se koristi pri izradi supozitorija izlivanjem u kalupe, a dobija se iz ulja palminog semena je:",
+    options: ["Cacao oleum raspatum", "Witepsol", "Glicerol-želatinska podloga"],
+    correct: [1],
+    multiple: false
+  },
+  {
+    text: "194. Ako podloga sadrži Cera alba, Cera lanae i Vaselinum album, pripada tipu:",
+    options: ["bezvodnih podloga tipa ugljovodonika", "bezvodnih podloga tipa apsorpcionih baza", "emulzionih podloga tipa U/V", "podloga sa polietilenglikolima"],
+    correct: [1],
+    multiple: false
+  },
+  {
+    text: "196. Na osnovu datog sastava odrediti koja je čajna smeša u pitanju.\nSennae folium\nSambuci flos\nFrangulae cortex\nFoeniculi fructus\nKalii et natrii tartaras",
+    options: ["Species laxantes", "Species amarae", "Species stomachicae", "Species urologicae"],
+    correct: [0],
+    multiple: false
+  },
+  {
+    text: "203. Izdvoj podloge tipa ugljovodonika:",
+    options: ["Macrogoli", "Oleum cacao", "Paraffinum solidum", "Cera alba", "Oleum olivae", "Oleum paraffini"],
+    correct: [2, 5],
+    multiple: true
+  },
+  {
+    text: "204. Pre ekstrakcije biljne droge, koja sadrži alkaloide kao aktivne principe, droga se priprema kako bi se obezbedila bolja ekstrakcija alkaloida. Analizirati ponuđene postupke i izdvojiti tačne tvrdnje:",
+    options: ["usitnjavanje i prosejavanje droge kroz sito 3mm", "usitnjavanje i prosejavanje droge kroz sito 0,75mm", "kvašenje droge rastvorom limunske kiseline", "kvašenje droge alkoholom pre ekstrakcije"],
+    correct: [1, 2],
+    multiple: true
+  },
+  {
+    text: "206. Od ponuđenih pomoćnih materija koje se koriste pri izradi tableta, izdvojiti one koje služe za oblaganje film tableta:",
+    options: ["Aerosil", "Metil celuloza", "Magnezijum stearat", "Etil celuloza", "Mikrokristalna celuloza"],
+    correct: [1, 3],
+    multiple: true
+  },
+  {
+    text: "207. Od ponuđenih sastojaka izabrati one koji mogu biti emulgatori u stearinskim kremovima:",
+    options: ["Natrijum stearat", "Natrijum laurilsulfat", "Trietanolamin", "Kalijum stearat", "Natrijum tetraborat"],
+    correct: [0, 3],
+    multiple: true
+  },
+  {
+    text: "208. Proučiti recept i izdvojiti tvrdnje koje se odnose na dati preparat:\nRp/Suppositoria glyceroli N⁰XII\nM.f. suppositoria\nD.S.1 uveče u rektum",
+    options: ["sistemsko delovanje", "blagi laksans", "bela signatura", "izrađuju se ručnom metodom", "crvena signatura", "antiseptično delovanje"],
+    correct: [1, 4],
+    multiple: true
+  },
+  {
+    text: "209. Ako su kapi za oči namenjene za ukapavanje u oko pri hiruškim intervencijama, one po propisu Ph.JugV ne smeju biti:",
+    options: ["hipotonične", "sterilne", "apirogene", "tipa rastvora", "konzervisane"],
+    correct: [0, 4],
+    multiple: true
+  },
+  {
+    text: "211. Kada se izrađuje Ipecacuanhae radicis infusum potrebno je postupiti po određenim pravilima. Izdvojiti tvrdnje koje su tačne:",
+    options: ["koren biljke proseje se kroz sito 3", "droga se pre ekstrakcije nakvasi rastvorom limunske kiseline", "droga se nakon bubrenja zagreva sa propisanom količinom vode na 90º C, 30 min", "preparat se pre koliranja mora potpuno ohladiti", "droga se pre ekstrakcije nakvasi približno istom količinom etanola", "stepen usitnjenosti droge treba da odgovara stepenu usitnjenosti krupnog praha"],
+    correct: [1, 5],
+    multiple: true
+  },
+  {
+    text: "212. Od nabrojanih postupaka izrade mekih kapsula izdvojiti one koji su pogodni i za punjenje praškastim lekovitim supstancama:",
+    options: ["Šererov postupak", "Presovanje", "Potapanje kalupa", "Akogel"],
+    correct: [1, 3],
+    multiple: true
+  }
+
+  
+  
+];
+let currentIndex = 0;
+function showQuestion() {
+  const containerPitanje = document.getElementById("pitanje");
+  const containerOdgovori = document.getElementById("odgovori");
+  const resultDiv = document.getElementById("rezultat");
+
+  const q = questions[currentIndex];
+  containerPitanje.innerText = q.text;
+  containerOdgovori.innerHTML = "";
+  resultDiv.innerText = "";
+
+  if (q.multiple) {
+    q.options.forEach((opt, i) => {
+      const label = document.createElement("label");
+      const checkbox = document.createElement("input");
+      checkbox.type = "checkbox";
+      checkbox.name = "answer";
+      checkbox.value = i;
+      label.appendChild(checkbox);
+      label.appendChild(document.createTextNode(opt));
+      containerOdgovori.appendChild(label);
+      containerOdgovori.appendChild(document.createElement("br"));
+    });
+  } else {
+    q.options.forEach((opt, i) => {
+      const label = document.createElement("label");
+      const radio = document.createElement("input");
+      radio.type = "radio";
+      radio.name = "answer";
+      radio.value = i;
+      label.appendChild(radio);
+      label.appendChild(document.createTextNode(opt));
+      containerOdgovori.appendChild(label);
+      containerOdgovori.appendChild(document.createElement("br"));
+    });
+  }
+}
+
+function checkAnswer() {
+  const q = questions[currentIndex];
+  const resultDiv = document.getElementById("rezultat");
+  let isCorrect = false;
+
+  if (q.multiple) {
+    const checkedBoxes = document.querySelectorAll('input[name="answer"]:checked');
+    if (checkedBoxes.length === 0) {
+      alert("Molim te, izaberi bar jedan odgovor.");
+      return;
+    }
+    const userAnswers = Array.from(checkedBoxes).map(cb => parseInt(cb.value)).sort();
+    const correctAnswers = q.correct.slice().sort();
+
+    isCorrect = JSON.stringify(userAnswers) === JSON.stringify(correctAnswers);
+
+    if (isCorrect) {
+      resultDiv.innerText = "Tačno bravoo srcee <3";
+    } else {
+      const correctText = correctAnswers.map(i => q.options[i]).join(", ");
+      resultDiv.innerText = `Netačno :( 
+      Tačan odgovor je: ${correctText}`;
+    }
+
+  } else {
+    const selected = document.querySelector('input[name="answer"]:checked');
+    if (!selected) {
+      alert("Molim te, izaberi odgovor.");
+      return;
+    }
+    const answerIndex = parseInt(selected.value);
+    isCorrect = q.correct.includes(answerIndex);
+
+    if (isCorrect) {
+      resultDiv.innerText = "Tačno bravoo srcee <3";
+    } else {
+      const correctText = q.correct.map(i => q.options[i]).join(", ");
+      resultDiv.innerText = `Netačno :( 
+      Tačan odgovor je: ${correctText}`;
+    }
+  }
+}
+
+function nextQuestion() {
+  if (currentIndex < questions.length - 1) {
+    currentIndex++;
+    showQuestion();
+  }
+}
+
+function prevQuestion() {
+  if (currentIndex > 0) {
+    currentIndex--;
+    showQuestion();
+  }
+}
+
+document.getElementById("proveri").addEventListener("click", checkAnswer);
+document.getElementById("sledece").addEventListener("click", nextQuestion);
+document.getElementById("prethodno").addEventListener("click", prevQuestion);
+
+showQuestion();
+
+</script>
+
+</body>
+</html>

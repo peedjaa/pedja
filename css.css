@@ -1,0 +1,96 @@
+body {
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  background: #f9f0ff;
+  color: #4a235a;
+  max-width: 600px;
+  margin: 40px auto;
+  padding: 20px 30px;
+  border-radius: 12px;
+  box-shadow: 0 10px 30px rgba(128, 0, 128, 0.1);
+}
+
+#kviz {
+  background: #fff0f6;
+  padding: 25px 30px 35px 30px;
+  border-radius: 12px;
+  box-shadow: 0 8px 25px rgba(128, 0, 128, 0.15);
+}
+
+.pitanje {
+  font-size: 1.5em;
+  font-weight: 600;
+  margin-bottom: 20px;
+  color: #7b1fa2;
+}
+
+.odgovor {
+  display: block;
+  margin: 12px 0;
+  font-size: 1.1em;
+  cursor: pointer;
+  user-select: none;
+  padding-left: 30px;
+  position: relative;
+}
+
+.odgovor input[type="radio"] {
+  position: absolute;
+  left: 0;
+  top: 50%;
+  transform: translateY(-50%);
+  cursor: pointer;
+  width: 20px;
+  height: 20px;
+  accent-color: #d81b60;
+}
+
+button {
+  background-color: #ba68c8;
+  color: white;
+  border: none;
+  padding: 12px 20px;
+  margin: 15px 8px 0 0;
+  border-radius: 8px;
+  font-weight: 600;
+  font-size: 1em;
+  cursor: pointer;
+  transition: background-color 0.25s ease;
+  box-shadow: 0 4px 8px rgba(186, 104, 200, 0.4);
+}
+
+button:hover:not(:disabled) {
+  background-color: #9c27b0;
+  box-shadow: 0 6px 12px rgba(156, 39, 176, 0.6);
+}
+
+button:disabled {
+  background-color: #e1bee7;
+  cursor: not-allowed;
+  box-shadow: none;
+}
+
+.rezultat {
+  margin-top: 15px;
+  font-weight: 700;
+  font-size: 1.2em;
+  min-height: 28px;
+  user-select: none;
+  color: #d81b60;
+}
+
+@media (max-width: 480px) {
+  body {
+    margin: 20px 10px;
+    padding: 15px 20px;
+  }
+  #kviz {
+    padding: 20px;
+  }
+  .pitanje {
+    font-size: 1.3em;
+  }
+  button {
+    padding: 10px 15px;
+    font-size: 0.95em;
+  }
+}
